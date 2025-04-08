@@ -1,13 +1,16 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import './index.css';
-import { FavoritesProvider } from './Context/FavoritesContext';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./index.css";
+import { BrowserRouter } from "react-router-dom"; // ✅ Importante
+import { ItemProvider } from "./context/ItemContext";
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <FavoritesProvider>
-      <App />
-    </FavoritesProvider>
+    <BrowserRouter>
+      <ItemProvider>
+        <App />
+      </ItemProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );

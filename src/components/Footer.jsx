@@ -3,9 +3,9 @@ import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-purple-500/60 text-white p-4 flex flex-col items-center">
+    <footer className="bg-yellow-600/10 backdrop-blur-md text-white p-7 flex flex-col items-center space-y-4 shadow-md">
       <p className="text-sm text-white text-center">
-        &copy; {new Date().getFullYear()} Rick and Morty – ¡Explora el multiverso con humor y locura!
+        &copy; {new Date().getFullYear()} Liga Planetaria de SuperHeroes – ¡Explora el multiverso de SuperHeroes!
       </p>
     </footer>
   );

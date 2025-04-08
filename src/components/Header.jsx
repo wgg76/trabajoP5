@@ -1,16 +1,56 @@
-// src/components/Header.jsx
 import React from 'react';
-import logo from '../assets/fondo2.jpg'; // Ajusta la ruta y el nombre del archivo
-import RandomQuote from './RandomQuote';
+import { Link, useLocation } from 'react-router-dom'; // Usamos useLocation para obtener la ubicación actual
 
 const Header = () => {
+  const location = useLocation(); // Obtenemos la ubicación actual
+
   return (
-    <header className="bg-purple-500/60  text-white p-1 flex flex-col items-center space-y-4">
+    <header className="bg-yellow-600/10 backdrop-blur-md text-white p-7 flex flex-col items-center space-y-4 shadow-md">
       <div className="flex items-center justify-center space-x-5">
-        <img src={logo} alt="Logo" className="max-h-14 object-contain" />
-        <h1 className="text-5xl font-bold">Rick and Morty - Explorador Interdimensional C-137</h1>
+        <h1 className="text-5xl font-bold text-center">Liga Planetaria de SuperHeroes</h1>
       </div>
-      <RandomQuote />
+
+      <div className="flex space-x-4 mb-5">
+        {/* En la página principal Home */}
+        
+
+        {/* En la página de personajes, mostrar "Inicio" y "Agregar personaje" */}
+        {location.pathname === "/items" && (
+          <>
+            <Link
+              to="/"
+              className="bg-white text-yellow-600 font-semibold px-4 py-2 rounded hover:bg-yellow-100 transition"
+            >
+              🏠 Inicio
+            </Link>
+
+            <Link
+              to="/items/create"
+              className="bg-white text-yellow-600 font-semibold px-4 py-2 rounded hover:bg-yellow-100 transition"
+            >
+              + Agregar personaje
+            </Link>
+          </>
+        )}
+
+        {/* En la página de edición, mostrar "Personajes" e "Inicio" */}
+        {location.pathname.includes("/items/") && location.pathname.includes("/edit") && (
+          <>
+            <Link
+              to="/items"
+              className="bg-white text-yellow-600 font-semibold px-4 py-2 rounded hover:bg-yellow-100 transition"
+            >
+              🦸‍♂️ Personajes
+            </Link>
+            <Link
+              to="/"
+              className="bg-white text-yellow-600 font-semibold px-4 py-2 rounded hover:bg-yellow-100 transition"
+            >
+              🏠 Inicio
+            </Link>
+          </>
+        )}
+      </div>
     </header>
   );
 };

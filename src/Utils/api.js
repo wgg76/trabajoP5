@@ -1,13 +1,13 @@
 // src/utils/api.js
 export const fetchCharacters = async () => {
   try {
-    const response = await fetch("https://rickandmortyapi.com/api/character/");
+    const response = await fetch("https://cdn.jsdelivr.net/gh/wgg76/superhero-api@main/superheroes.json");
     if (!response.ok) {
       throw new Error("Error al obtener personajes");
     }
     const data = await response.json();
-    // Retornamos solo el array de personajes
-    return data.results;
+    // Retornamos directamente el array de superhéroes
+    return data;
   } catch (error) {
     throw error;
   }
@@ -15,12 +15,15 @@ export const fetchCharacters = async () => {
 
 export const fetchCharactersByName = async (name) => {
   try {
-    const response = await fetch(`https://rickandmortyapi.com/api/character/?name=${name}`);
+    const response = await fetch("https://cdn.jsdelivr.net/gh/wgg76/superhero-api@main/superheroes.json");
     if (!response.ok) {
-      throw new Error("Error al obtener personajes por nombre");
+      throw new Error("Error al obtener personajes");
     }
     const data = await response.json();
-    return data.results;
+    // Filtramos los personajes cuyo nombre incluya el término buscado (ignora mayúsculas/minúsculas)
+    return data.filter((character) =>
+      character.name.toLowerCase().includes(name.toLowerCase())
+    );
   } catch (error) {
     throw error;
   }
