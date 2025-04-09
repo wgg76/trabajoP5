@@ -47,3 +47,5 @@ https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items
 Esta API permite realizar operaciones CRUD para gestionar los superhéroes.
 
 Autor Walter Guillermo Gerhardt
+
+LINK del Proyecto: https://ligaplanetaria.netlify.app/
