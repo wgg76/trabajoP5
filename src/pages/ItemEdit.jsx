@@ -6,8 +6,8 @@ import background from '../assets/fondo 2.png';
 const ItemEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
-  // Estado del formulario para editar el personaje, sin "slug" y con "powerstats" en su lugar
+
+  // Estado del formulario para editar el personaje, con campo de powerstats
   const [form, setForm] = useState({
     name: "",
     imageUrl: "",
@@ -22,9 +22,10 @@ const ItemEdit = () => {
       combat: ""
     }
   });
+  
   const [loading, setLoading] = useState(true);
 
-  // Cargar el personaje y precargar el formulario al montar el componente
+  // Efecto para cargar el personaje a partir del id y precargar el formulario
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -37,6 +38,7 @@ const ItemEdit = () => {
         setForm({
           name: data.name || "",
           imageUrl: data.imageUrl || "",
+          // Si biography es objeto, extraemos fullName; de lo contrario lo usamos directamente
           biography: data.biography && typeof data.biography === 'object'
             ? data.biography.fullName
             : data.biography || "",
@@ -63,10 +65,11 @@ const ItemEdit = () => {
         setLoading(false);
       }
     };
+
     fetchItem();
   }, [id]);
 
-  // Manejo de cambios en los inputs principales
+  // Manejo de cambios para inputs principales
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -74,22 +77,22 @@ const ItemEdit = () => {
     });
   };
 
-  // Manejo de cambios en los campos de powerstats
+  // Manejo de cambios para los campos de powerstats
   const handleChangePowerstat = (e) => {
     setForm({
       ...form,
       powerstats: {
         ...form.powerstats,
-        [e.target.name]: e.target.value
-      }
+        [e.target.name]: e.target.value,
+      },
     });
   };
 
-  // Envío de la actualización (PUT) del personaje
+  // Función para enviar los datos actualizados mediante PUT
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validar que no queden campos principales vacíos
+    // Validación simple: verifica que los campos principales tengan datos.
     if (!form.name || !form.imageUrl || !form.biography || !form.publisher) {
       toast.error("Por favor, completa todos los campos.");
       return;
@@ -109,7 +112,7 @@ const ItemEdit = () => {
       toast.success("Personaje actualizado con éxito");
       navigate("/items");
     } catch (error) {
-      console.error("❌ Error al actualizar:", error);
+      
       toast.error("No se pudo actualizar el personaje");
     }
   };

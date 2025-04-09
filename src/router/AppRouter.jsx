@@ -12,11 +12,12 @@ const AppRouter = () => (
   <Routes>
     <Route path="/bulk-upload" element={<BulkUploader />} />
     <Route path="/" element={<Home />} />
-    <Route path="/characters" element={<ItemList />} /> {/* Nueva ruta */}
+    <Route path="/characters" element={<ItemList />} />
     <Route path="/items" element={<ItemList />} />
     <Route path="/items/create" element={<ItemCreate />} />
-    <Route path="/items/:id" element={<ItemDetail />} />
+    {/* Ruta de edición antes de la de detalle */}
     <Route path="/items/:id/edit" element={<ItemEdit />} />
+    <Route path="/items/:id" element={<ItemDetail />} />
     <Route path="*" element={<NotFound />} />
   </Routes>
 );

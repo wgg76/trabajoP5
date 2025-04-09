@@ -1,20 +1,30 @@
 import React, { useState, useContext } from "react";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
-import { ItemContext } from "../context/ItemContext"; // Asegúrate de importar el contexto
+import { useNavigate, Link } from "react-router-dom";
+import { ItemContext } from "../context/ItemContext";
+import background from "../assets/fondo 2.png";
 
 const ItemCreate = () => {
-  const { setItems } = useContext(ItemContext); // Accedemos a setItems para actualizar la lista de personajes
+  const { setItems } = useContext(ItemContext);
+  const navigate = useNavigate();
+
+  // Estado para el formulario (con poderstats, si quieres)
   const [form, setForm] = useState({
     name: "",
-    slug: "",
     imageUrl: "",
     biography: "",
     publisher: "",
+    powerstats: {
+      intelligence: "",
+      strength: "",
+      speed: "",
+      durability: "",
+      power: "",
+      combat: ""
+    }
   });
 
-  const navigate = useNavigate();
-
+  // Maneja los cambios en inputs principales
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -22,44 +32,56 @@ const ItemCreate = () => {
     });
   };
 
+  // Maneja los cambios en campos de powerstats
+  const handleChangePowerstats = (e) => {
+    setForm({
+      ...form,
+      powerstats: {
+        ...form.powerstats,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
+
+  // Maneja el envío del formulario (POST)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!form.name || !form.slug || !form.imageUrl || !form.biography || !form.publisher) {
+    // Validación sencilla
+    if (
+      !form.name ||
+      !form.imageUrl ||
+      !form.biography ||
+      !form.publisher
+    ) {
       toast.error("Por favor, completa todos los campos.");
       return;
     }
 
     try {
       const response = await fetch(
-        "https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items", // URL de la API
+        "https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),
         }
       );
 
       if (!response.ok) {
         const error = await response.json();
-        console.error("❌ Error al crear:", error);
         throw new Error(error.msg || "Error al crear el personaje");
       }
 
       toast.success("¡Personaje creado!");
 
-      // Recargar la lista de personajes
-      const updatedItems = await fetch("https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items")
-        .then((res) => res.json())
-        .catch((error) => {
-          console.error("❌ Error al cargar los personajes:", error);
-        });
+      // Recargar la lista global
+      const updatedItems = await fetch(
+        "https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items"
+      ).then((res) => res.json());
 
-      setItems(updatedItems); // Actualizar el contexto con los nuevos personajes
-
-      navigate("/items"); // Redirige a la lista de personajes
+      setItems(updatedItems);
+      navigate("/items");
     } catch (error) {
       console.error("❌ Error al crear:", error);
       toast.error("No se pudo crear el personaje");
@@ -67,57 +89,196 @@ const ItemCreate = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded shadow text-black">
-      <h1 className="text-2xl font-bold mb-4">Crear personaje</h1>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Nombre"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="slug"
-          value={form.slug}
-          onChange={handleChange}
-          placeholder="Slug"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="imageUrl"
-          value={form.imageUrl}
-          onChange={handleChange}
-          placeholder="URL de imagen"
-          className="w-full p-2 border rounded"
-        />
-        <textarea
-          name="biography"
-          value={form.biography}
-          onChange={handleChange}
-          placeholder="Biografía"
-          className="w-full p-2 border rounded"
-        />
-        <input
-          type="text"
-          name="publisher"
-          value={form.publisher}
-          onChange={handleChange}
-          placeholder="Editorial"
-          className="w-full p-2 border rounded"
-        />
-        <div className="flex justify-end">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-          >
-            Guardar personaje
-          </button>
-        </div>
-      </form>
+    <div
+      className="bg-black"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        minHeight: "100vh",
+        width: "100vw",
+        marginLeft: "calc(-50vw + 50%)",
+        paddingTop: "140px",
+        paddingBottom: "120px",
+      }}
+    >
+      <div className="max-w-xl mx-auto bg-white p-6 rounded shadow text-black">
+        <h1 className="text-2xl font-bold mb-4">Agregar personaje</h1>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Nombre */}
+          <div>
+            <label htmlFor="name" className="block font-medium text-gray-700 mb-1">
+              Nombre:
+            </label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              placeholder="Nombre"
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          {/* URL de imagen */}
+          <div>
+            <label htmlFor="imageUrl" className="block font-medium text-gray-700 mb-1">
+              URL de imagen:
+            </label>
+            <input
+              id="imageUrl"
+              type="text"
+              name="imageUrl"
+              value={form.imageUrl}
+              onChange={handleChange}
+              placeholder="Ingresa el link de una imagen"
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          {/* Biografía */}
+          <div>
+            <label htmlFor="biography" className="block font-medium text-gray-700 mb-1">
+              Biografía:
+            </label>
+            <textarea
+              id="biography"
+              name="biography"
+              value={form.biography}
+              onChange={handleChange}
+              placeholder="Escribe la biografía"
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          {/* Editorial */}
+          <div>
+            <label htmlFor="publisher" className="block font-medium text-gray-700 mb-1">
+              Editorial:
+            </label>
+            <input
+              id="publisher"
+              type="text"
+              name="publisher"
+              value={form.publisher}
+              onChange={handleChange}
+              placeholder="Editorial"
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          {/* Poderes (opcional, si quieres mantener la misma estructura que el edit) */}
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">
+              Poderes:
+            </label>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label htmlFor="intelligence" className="block text-gray-600 text-sm">
+                  Inteligencia:
+                </label>
+                <input
+                  id="intelligence"
+                  type="text"
+                  name="intelligence"
+                  value={form.powerstats.intelligence}
+                  onChange={handleChangePowerstats}
+                  placeholder="Inteligencia"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label htmlFor="strength" className="block text-gray-600 text-sm">
+                  Fuerza:
+                </label>
+                <input
+                  id="strength"
+                  type="text"
+                  name="strength"
+                  value={form.powerstats.strength}
+                  onChange={handleChangePowerstats}
+                  placeholder="Fuerza"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label htmlFor="speed" className="block text-gray-600 text-sm">
+                  Velocidad:
+                </label>
+                <input
+                  id="speed"
+                  type="text"
+                  name="speed"
+                  value={form.powerstats.speed}
+                  onChange={handleChangePowerstats}
+                  placeholder="Velocidad"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label htmlFor="durability" className="block text-gray-600 text-sm">
+                  Durabilidad:
+                </label>
+                <input
+                  id="durability"
+                  type="text"
+                  name="durability"
+                  value={form.powerstats.durability}
+                  onChange={handleChangePowerstats}
+                  placeholder="Durabilidad"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label htmlFor="power" className="block text-gray-600 text-sm">
+                  Poder:
+                </label>
+                <input
+                  id="power"
+                  type="text"
+                  name="power"
+                  value={form.powerstats.power}
+                  onChange={handleChangePowerstats}
+                  placeholder="Poder"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+              <div>
+                <label htmlFor="combat" className="block text-gray-600 text-sm">
+                  Combate:
+                </label>
+                <input
+                  id="combat"
+                  type="text"
+                  name="combat"
+                  value={form.powerstats.combat}
+                  onChange={handleChangePowerstats}
+                  placeholder="Combate"
+                  className="w-full p-2 border rounded"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Botones Guardar y Cancelar */}
+          <div className="flex justify-between mt-3">
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            >
+              Guardar personaje
+            </button>
+            <Link
+              to="/items"
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
+            >
+              Cancelar
+            </Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

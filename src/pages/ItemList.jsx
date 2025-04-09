@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import Swal from "sweetalert2";
-import background from "../assets/fondo.jpg"; // Ajusta la ruta si es necesario
+import Swal from "sweetalert2"; // Asegúrate de instalar sweetalert2: npm install sweetalert2
+import background from "../assets/fondo.jpg"; // Ajusta la ruta según sea necesario
 
 const ItemList = () => {
   const [items, setItems] = useState([]); // Almacenar los personajes de la página actual
@@ -17,7 +17,7 @@ const ItemList = () => {
     setLoading(true);
     setError("");
     try {
-      // Calcular el número de items a mostrar según la página actual
+      // Se envía la petición con el parámetro page y limit
       const response = await fetch(
         `https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items?page=${currentPage}&limit=${itemsPerPage}`
       );
@@ -26,7 +26,7 @@ const ItemList = () => {
       }
       const data = await response.json();
 
-      // Obtener el número total de personajes para la paginación
+      // Para calcular la paginación se realiza otra petición
       const totalResponse = await fetch(
         "https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items"
       );
@@ -55,7 +55,7 @@ const ItemList = () => {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Función para eliminar un personaje
+  // Función para eliminar un personaje usando SweetAlert2 para confirmar
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -77,10 +77,10 @@ const ItemList = () => {
         }
         toast.success("Personaje eliminado con éxito");
 
-        // Actualizar el estado local eliminando el ítem borrado
+        // Actualizamos el estado eliminando el ítem borrado
         setItems(items.filter((item) => item.id !== id));
       } catch (error) {
-        console.error("❌ Error al eliminar:", error);
+        
         toast.error("No se pudo eliminar el personaje");
       }
     }
