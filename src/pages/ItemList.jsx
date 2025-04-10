@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import Swal from "sweetalert2"; // Asegúrate de instalar sweetalert2: npm install sweetalert2
-import background from "../assets/fondo.jpg"; // Ajusta la ruta según sea necesario
+import Swal from "sweetalert2"; 
+import background from "../assets/fondo.jpg"; 
 
 const ItemList = () => {
-  const [items, setItems] = useState([]); // Almacenar los personajes de la página actual
+  const [items, setItems] = useState([]); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [currentPage, setCurrentPage] = useState(1); // Página actual
-  const [itemsPerPage] = useState(20); // Número de personajes por página
-  const [totalItems, setTotalItems] = useState(0); // Número total de personajes
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [itemsPerPage] = useState(20); 
+  const [totalItems, setTotalItems] = useState(0); 
 
-  // Función para obtener los personajes según la página
+  
   const fetchItems = async () => {
     setLoading(true);
     setError("");
     try {
-      // Se envía la petición con el parámetro page y limit
+     
       const response = await fetch(
         `https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items?page=${currentPage}&limit=${itemsPerPage}`
       );
@@ -26,7 +26,7 @@ const ItemList = () => {
       }
       const data = await response.json();
 
-      // Para calcular la paginación se realiza otra petición
+      
       const totalResponse = await fetch(
         "https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items"
       );
@@ -41,12 +41,12 @@ const ItemList = () => {
     }
   };
 
-  // Cargar los personajes cada vez que cambia la página
+  
   useEffect(() => {
     fetchItems();
   }, [currentPage]);
 
-  // Función para cambiar de página
+  
   const paginate = (pageNumber) => {
     if (pageNumber >= 1 && pageNumber <= Math.ceil(totalItems / itemsPerPage)) {
       setCurrentPage(pageNumber);
@@ -55,7 +55,7 @@ const ItemList = () => {
 
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Función para eliminar un personaje usando SweetAlert2 para confirmar
+  
   const handleDelete = async (id) => {
     const result = await Swal.fire({
       title: "¿Estás seguro?",
@@ -77,7 +77,7 @@ const ItemList = () => {
         }
         toast.success("Personaje eliminado con éxito");
 
-        // Actualizamos el estado eliminando el ítem borrado
+        
         setItems(items.filter((item) => item.id !== id));
       } catch (error) {
         
