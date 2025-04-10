@@ -14,8 +14,7 @@ const AppRouter = () => (
     <Route path="/" element={<Home />} />
     <Route path="/characters" element={<ItemList />} />
     <Route path="/items" element={<ItemList />} />
-    <Route path="/items/create" element={<ItemCreate />} />
-    {/* Ruta de edición antes de la de detalle */}
+    <Route path="/items/create" element={<ItemCreate />} />    
     <Route path="/items/:id/edit" element={<ItemEdit />} />
     <Route path="/items/:id" element={<ItemDetail />} />
     <Route path="*" element={<NotFound />} />
