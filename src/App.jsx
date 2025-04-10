@@ -12,23 +12,23 @@ function App() {
 
   return (
     <div className="min-h-screen flex flex-col text-white relative">
-      {/* Header fijo en la parte superior */}
+      
       <header className="fixed top-0 w-full bg-gray-900 bg-opacity-80 z-30">
         <Header />
       </header>
 
-      {/* Main con padding para que el contenido no quede debajo del header y footer */}
+      
       <main
         className={
           isHome
-            ? "flex-grow pt-20 pb-16" // pt-20 para espacio del header, pb-16 para espacio del footer
+            ? "flex-grow pt-20 pb-16" 
             : "flex-grow container mx-auto p-4 mt-4"
         }
       >
         <AppRouter />
       </main>
 
-      {/* Footer fijo en la parte inferior */}
+      
       <footer className="fixed bottom-0 w-full bg-gray-900 bg-opacity-80 z-30">
         <Footer />
       </footer>
