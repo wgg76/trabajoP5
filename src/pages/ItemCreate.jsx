@@ -8,7 +8,7 @@ const ItemCreate = () => {
   const { setItems } = useContext(ItemContext);
   const navigate = useNavigate();
 
-  // Estado para el formulario (con poderstats, si quieres)
+  
   const [form, setForm] = useState({
     name: "",
     imageUrl: "",
@@ -24,7 +24,7 @@ const ItemCreate = () => {
     }
   });
 
-  // Maneja los cambios en inputs principales
+  
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -32,7 +32,7 @@ const ItemCreate = () => {
     });
   };
 
-  // Maneja los cambios en campos de powerstats
+  
   const handleChangePowerstats = (e) => {
     setForm({
       ...form,
@@ -43,11 +43,11 @@ const ItemCreate = () => {
     });
   };
 
-  // Maneja el envío del formulario (POST)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación sencilla
+    
     if (
       !form.name ||
       !form.imageUrl ||
@@ -75,7 +75,7 @@ const ItemCreate = () => {
 
       toast.success("¡Personaje creado!");
 
-      // Recargar la lista global
+      
       const updatedItems = await fetch(
         "https://67f1add4c733555e24add1ac.mockapi.io/api/v1/items"
       ).then((res) => res.json());
@@ -106,7 +106,7 @@ const ItemCreate = () => {
       <div className="max-w-xl mx-auto bg-white p-6 rounded shadow text-black">
         <h1 className="text-2xl font-bold mb-4">Agregar personaje</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Nombre */}
+          
           <div>
             <label htmlFor="name" className="block font-medium text-gray-700 mb-1">
               Nombre:
@@ -122,7 +122,7 @@ const ItemCreate = () => {
             />
           </div>
 
-          {/* URL de imagen */}
+          
           <div>
             <label htmlFor="imageUrl" className="block font-medium text-gray-700 mb-1">
               URL de imagen:
@@ -138,7 +138,7 @@ const ItemCreate = () => {
             />
           </div>
 
-          {/* Biografía */}
+          
           <div>
             <label htmlFor="biography" className="block font-medium text-gray-700 mb-1">
               Biografía:
@@ -153,7 +153,7 @@ const ItemCreate = () => {
             />
           </div>
 
-          {/* Editorial */}
+          
           <div>
             <label htmlFor="publisher" className="block font-medium text-gray-700 mb-1">
               Editorial:
@@ -169,7 +169,7 @@ const ItemCreate = () => {
             />
           </div>
 
-          {/* Poderes (opcional, si quieres mantener la misma estructura que el edit) */}
+          
           <div>
             <label className="block font-medium text-gray-700 mb-1">
               Poderes:
@@ -262,7 +262,7 @@ const ItemCreate = () => {
             </div>
           </div>
 
-          {/* Botones Guardar y Cancelar */}
+          
           <div className="flex justify-between mt-3">
             <button
               type="submit"
