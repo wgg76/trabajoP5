@@ -145,31 +145,6 @@ const ItemList = () => {
             ))}
           </ul>
         )}
-
-        {/* Paginación */}
-        <div className="flex justify-center mt-6">
-          <button
-            onClick={() => paginate(currentPage - 1)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded mr-2"
-            disabled={currentPage === 1}
-          >
-            Anterior
-          </button>
-          <button
-            onClick={() => paginate(currentPage + 1)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded"
-            disabled={currentPage * itemsPerPage >= totalItems}
-          >
-            Siguiente
-          </button>
-        </div>
-
-        {/* Información de paginación */}
-        <div className="flex justify-center mt-4">
-          <p className="text-white">
-            Página {currentPage} de {totalPages}
-          </p>
-        </div>
       </div>
     </div>
   );
