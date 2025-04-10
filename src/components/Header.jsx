@@ -5,12 +5,12 @@ const Header = () => {
   const location = useLocation();
   const path = location.pathname;
 
-  // Definimos banderas según la ruta actual:
+ 
   const isHome = path === "/";
   const isList = path === "/items";
   const isCreate = path === "/items/create";
   const isEdit = path.includes("/edit");
-  // Vista de detalle: ruta que empieza con "/items/" y no es listado, creación ni edición.
+  
   const isDetail = path.startsWith("/items/") && !isList && !isCreate && !isEdit;
 
   return (
@@ -19,10 +19,10 @@ const Header = () => {
         <h1 className="text-5xl font-bold text-center">Liga Planetaria de SuperHeroes</h1>
       </div>
 
-      {/* Mostrar botones si no se está en la página principal */}
+   
       {!isHome && (
         <div className="flex space-x-4 mb-5">
-          {/* El botón Inicio siempre se muestra */}
+         
           <Link
             to="/"
             className="bg-white text-yellow-600 font-semibold px-4 py-2 rounded hover:bg-yellow-100 transition"
@@ -30,7 +30,7 @@ const Header = () => {
             🏠 Inicio
           </Link>
 
-          {/* En listado, mostramos también "+ Agregar personaje" */}
+          
           {isList && (
             <Link
               to="/items/create"
@@ -40,7 +40,7 @@ const Header = () => {
             </Link>
           )}
 
-          {/* En detalle, mostramos el botón Personajes para volver al listado */}
+          
           {isDetail && (
             <Link
               to="/items"
