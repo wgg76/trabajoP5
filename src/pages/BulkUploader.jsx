@@ -9,10 +9,10 @@ const BulkUploader = () => {
     try {
       const response = await fetch(sourceUrl);
       const data = await response.json();
-      const first20 = data.slice(0, 20); // Cargar solo los primeros 20 personajes
+      const first20 = data.slice(0, 20); 
 
       for (const hero of first20) {
-        // Verificamos si biography es un objeto o un string.
+        
         const biography =
           typeof hero.biography === "object"
             ? hero.biography
@@ -30,8 +30,8 @@ const BulkUploader = () => {
           name: hero.name,
           slug: hero.slug,
           imageUrl: hero.images.sm,
-          biography, // Enviamos el objeto completo
-          // Agregamos los campos adicionales tal como vienen
+          biography, 
+         
           powerstats: hero.powerstats || {},
           appearance: hero.appearance || {},
           work: hero.work || {},
@@ -39,7 +39,7 @@ const BulkUploader = () => {
           images: hero.images || {},
         };
 
-        // Solicitud POST a la API
+   
         const postResponse = await fetch(apiUrl, {
           method: "POST",
           headers: {
