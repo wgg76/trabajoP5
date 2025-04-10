@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Background from '../assets/fondo.jpg'; // Imagen para tarjeta
+import Background from '../assets/fondo.jpg'; 
 
 const ItemDetail = () => {
   const { id } = useParams();
@@ -110,7 +110,7 @@ const ItemDetail = () => {
             <strong>Relatives:</strong> {hero.connections?.relatives || "N/A"}
           </p>
         </div>
-        {/* Se removió el botón de "Ver personajes" de la tarjeta */}
+        
       </div>
     </div>
   );
