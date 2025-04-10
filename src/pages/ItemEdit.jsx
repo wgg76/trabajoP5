@@ -7,7 +7,7 @@ const ItemEdit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Estado del formulario para editar el personaje, con campo de powerstats
+  
   const [form, setForm] = useState({
     name: "",
     imageUrl: "",
@@ -25,7 +25,7 @@ const ItemEdit = () => {
   
   const [loading, setLoading] = useState(true);
 
-  // Efecto para cargar el personaje a partir del id y precargar el formulario
+  
   useEffect(() => {
     const fetchItem = async () => {
       try {
@@ -38,7 +38,7 @@ const ItemEdit = () => {
         setForm({
           name: data.name || "",
           imageUrl: data.imageUrl || "",
-          // Si biography es objeto, extraemos fullName; de lo contrario lo usamos directamente
+          
           biography: data.biography && typeof data.biography === 'object'
             ? data.biography.fullName
             : data.biography || "",
@@ -69,7 +69,7 @@ const ItemEdit = () => {
     fetchItem();
   }, [id]);
 
-  // Manejo de cambios para inputs principales
+  
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -77,7 +77,7 @@ const ItemEdit = () => {
     });
   };
 
-  // Manejo de cambios para los campos de powerstats
+  
   const handleChangePowerstat = (e) => {
     setForm({
       ...form,
@@ -88,11 +88,11 @@ const ItemEdit = () => {
     });
   };
 
-  // Función para enviar los datos actualizados mediante PUT
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validación simple: verifica que los campos principales tengan datos.
+    
     if (!form.name || !form.imageUrl || !form.biography || !form.publisher) {
       toast.error("Por favor, completa todos los campos.");
       return;
@@ -137,7 +137,7 @@ const ItemEdit = () => {
       <div className="max-w-xl mx-auto bg-white p-6 rounded shadow text-black">
         <h1 className="text-2xl font-bold mb-4">Editar personaje</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Campo: Nombre */}
+          
           <div>
             <label htmlFor="name" className="block text-gray-700 font-medium mb-1">
               Nombre:
@@ -153,7 +153,7 @@ const ItemEdit = () => {
             />
           </div>
 
-          {/* Campo: URL de imagen */}
+          
           <div>
             <label htmlFor="imageUrl" className="block text-gray-700 font-medium mb-1">
               URL de imagen:
@@ -169,7 +169,7 @@ const ItemEdit = () => {
             />
           </div>
 
-          {/* Campo: Biografía */}
+          
           <div>
             <label htmlFor="biography" className="block text-gray-700 font-medium mb-1">
               Biografía:
@@ -184,7 +184,7 @@ const ItemEdit = () => {
             />
           </div>
 
-          {/* Campo: Editorial */}
+          
           <div>
             <label htmlFor="publisher" className="block text-gray-700 font-medium mb-1">
               Editorial:
@@ -200,7 +200,7 @@ const ItemEdit = () => {
             />
           </div>
 
-          {/* Campos: Poderes (powerstats) */}
+          
           <div>
             <label className="block text-gray-700 font-medium mb-1">
               Poderes:
@@ -293,7 +293,7 @@ const ItemEdit = () => {
             </div>
           </div>
 
-          {/* Botones */}
+          
           <div className="flex justify-between">
             <button
               type="submit"
